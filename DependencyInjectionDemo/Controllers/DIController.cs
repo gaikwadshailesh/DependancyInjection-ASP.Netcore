@@ -34,4 +34,27 @@ public class DIController : ControllerBase
         _logger.LogInformation("Retrieved service IDs");
         return Ok(result);
     }
+
+    [HttpGet("multiple")]
+    public IActionResult GetMultiple()
+    {
+        var result = new
+        {
+            FirstCall = new
+            {
+                Singleton = _singletonService.GetOperationId(),
+                Scoped = _scopedService.GetOperationId(),
+                Transient = _transientService.GetOperationId()
+            },
+            SecondCall = new
+            {
+                Singleton = _singletonService.GetOperationId(),
+                Scoped = _scopedService.GetOperationId(),
+                Transient = _transientService.GetOperationId()
+            }
+        };
+
+        _logger.LogInformation("Retrieved multiple service IDs in single request");
+        return Ok(result);
+    }
 } 
